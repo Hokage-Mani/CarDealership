@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class LeaseContract extends Contract{
 
 
-    public LeaseContract(String date, String name, String email, String vehicleSold) {
+    public LeaseContract(String date, String name, String email, Vehicle vehicleSold) {
         super(date, name, email, vehicleSold);
     }
 
