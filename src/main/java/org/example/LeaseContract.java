@@ -26,7 +26,12 @@ public class LeaseContract extends Contract{
 
     @Override
     public BigDecimal getMonthlyPayment() {
-        //logic here
-        return null;
+        double originalPrice = getVehicleSold().getPrice();
+        double endingValue = getEndingValue().doubleValue();
+        double leasePrincipal = originalPrice - endingValue;
+        double rate = 0.04/12; //4% of annual rate divided by 12 months for 36 months
+        int months = 36;
+        double monthlyPay = leasePrincipal * (rate / (1 - Math.pow(1 + rate, -months)));
+        return BigDecimal.valueOf(monthlyPay).setScale(2, RoundingMode.HALF_UP);
     }
 }
