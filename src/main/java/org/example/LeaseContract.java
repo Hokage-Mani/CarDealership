@@ -11,11 +11,13 @@ public class LeaseContract extends Contract{
 
     @Override
     public BigDecimal getTotalPrice() {
+        //logic here
         return null;
     }
 
     @Override
     public BigDecimal getMonthlyPayment() {
+        //logic here
         return null;
     }
 }
