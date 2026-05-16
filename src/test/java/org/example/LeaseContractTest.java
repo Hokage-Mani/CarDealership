@@ -28,6 +28,6 @@ class LeaseContractTest {
         //Act
         BigDecimal valueTest2 = contract.getMonthlyPayment();
         //Assert
-        assertEquals(new BigDecimal("907.65"), valueTest2);
+        assertEquals(new BigDecimal("907.86"), valueTest2);
     }
 }

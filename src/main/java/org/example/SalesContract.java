@@ -53,4 +53,19 @@ public class SalesContract extends Contract{
         //rounding up 2 places for the sake of dealing with currency
         return BigDecimal.valueOf(monthlyPayment).setScale(2, RoundingMode.HALF_UP);
     }
+    //These methods are to help branch the ContractFileManager inside the class
+    public BigDecimal getSalesTaxAmount() {
+        double price = getVehicleSold().getPrice();
+        return BigDecimal.valueOf(price).multiply(new BigDecimal("0.05"));
+    }
+    public BigDecimal getRecordingFee() {
+        return new BigDecimal("100.00");
+    }
+    public BigDecimal getProcessingFee() {
+        if (getVehicleSold().getPrice() < 10000.00) {
+            return new BigDecimal("295.00");
+        } else {
+            return new BigDecimal("495.00");
+        }
+    }
 }
