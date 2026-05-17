@@ -295,6 +295,41 @@ public class UserInterface {
                     break;
                 case "L":
                     //Leasing a vehicle
+                    Vehicle leaseVehicle = null;
+                    System.out.println("\n--- Lease Processing ---");
+                    processGetAllVehiclesRequest();
+                    System.out.println("Enter the 4-digit VIN of vehicle to sell: ");
+                    int leaseVIN = Integer.parseInt(scanner.nextLine().trim());
+                    for(Vehicle v : dealership.getAllVehicles()){
+                        if(v.getVin() == leaseVIN){
+                            leaseVehicle = v;
+                            break;
+                        }
+                    }
+                    if(leaseVehicle == null){
+                        System.out.println("No vehicle matches with VIN: " + leaseVIN);
+                        break;
+                    }
+                    int currentYear = java.time.LocalDate.now().getYear();
+                    if(currentYear - leaseVehicle.getYear() > 3){
+                        System.out.println("Vehicle ineligible for lease. Must be under 3 years old.");
+                        break;
+                    }
+                    System.out.println("Enter customer name: ");
+                    String leaseName = scanner.nextLine().trim();
+                    System.out.println("Enter customer email: ");
+                    String leaseEmail = scanner.nextLine().trim();
+                    System.out.println("\n Confirmed to lease:" + leaseVehicle.getYear() + " " +
+                            leaseVehicle.getMake() + " " + leaseVehicle.getModel());
+                    String leaseDate = java.time.LocalDate.now().toString();
+                    LeaseContract leaseContract = new LeaseContract(leaseDate, leaseName, leaseEmail, leaseVehicle);
+                    ContractFileManager contractFileManagerL = new ContractFileManager();
+                    contractFileManagerL.saveContract(leaseContract);
+                    dealership.removeVehicle(leaseVehicle);
+                    DealershipFileManager.saveDealership(dealership);
+                    System.out.println("\n Lease processed! Contract saved. Inventory updated.");
+                    System.out.println("Press ENTER to return...");
+                    scanner.nextLine();
                     break;
                 case "C":
                     System.out.println("\n--- Listing All Contracts ---");
