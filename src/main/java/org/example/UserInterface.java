@@ -328,7 +328,7 @@ public class UserInterface {
                     dealership.removeVehicle(leaseVehicle);
                     DealershipFileManager.saveDealership(dealership);
                     System.out.println("\n Lease processed! Contract saved. Inventory updated.");
-                    System.out.println("Press ENTER to return...");
+                    System.out.println("Press ENTER to return....");
                     scanner.nextLine();
                     break;
                 case "C":
