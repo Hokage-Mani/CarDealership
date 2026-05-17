@@ -10,7 +10,7 @@ public class ContractFileManager {
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))){
             Vehicle v = contract.getVehicleSold();
 
-            String vehicleInfo =String.format("%d|%d|%s|%s|%s|%s|%d|%d|%.2f",
+            String vehicleInfo =String.format("%d|%d|%s|%s|%s|%s|%d|%.2f",
                     v.getVin(), v.getYear(), v.getMake(), v.getModel(), v.getVehicleType(), v.getColor(),
                     v.getOdometer(), v.getPrice());
             String baseInfo = String.format("%s|%s|%s|%s",
@@ -30,6 +30,22 @@ public class ContractFileManager {
         }catch (IOException e){
             System.out.println("Error writing to file");
             e.printStackTrace();
+        }
+    }
+    public void displayAllContracts() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            boolean hasContracts = false;
+
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line.replace("|", "  |  "));
+                hasContracts = true;
+            }
+            if (!hasContracts) {
+                System.out.println("No contracts have been saved yet.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the contracts file: " + e.getMessage());
         }
     }
 }

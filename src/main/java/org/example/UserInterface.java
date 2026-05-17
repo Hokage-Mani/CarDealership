@@ -257,50 +257,51 @@ public class UserInterface {
                 case "S":
                     //Selling a vehicle
                     Vehicle saleVehicle = null;
-                    Vehicle inventory = null;
                     System.out.println("\n--- Sale Processing ---");
                     processGetAllVehiclesRequest();
                     System.out.println("Enter the 4-digit VIN of vehicle to sell: ");
                     int saleVIN = Integer.parseInt(scanner.nextLine().trim());
-                    //scanner.nextLine();
                     for(Vehicle v : dealership.getAllVehicles()){
                         if(v.getVin() == saleVIN){
                             saleVehicle = v;
                             break;
                         }
-                        if(saleVehicle == null){
-                            System.out.println("No vehicle matches with VIN: " + saleVIN);
-                            break;
-                        }
-                        System.out.print("Enter customer name: ");
-                        String customerName = scanner.nextLine().trim();
-                        System.out.print("Enter customer email: ");
-                        String customerEmail = scanner.nextLine().trim();
-                        System.out.println("Confirmed to sell: " + saleVehicle.getYear() + " " +
-                                saleVehicle.getMake() + " " + saleVehicle.getModel());
-                        System.out.println("Contract price: $" + saleVehicle.getPrice());
-                        System.out.println("Will this purchase be financed? (Y/N)");
-                        String financeChoice = scanner.nextLine().trim();
-                        boolean isFinanced = financeChoice.equalsIgnoreCase("Y");
-                        String date = java.time.LocalDate.now().toString();
-                        SalesContract salesContract = new SalesContract(date, customerName, customerEmail,
-                                saleVehicle, isFinanced);
-                        //Saving the contract into the new CSV file
-                        ContractFileManager contractFileManager = new ContractFileManager();
-                        contractFileManager.saveContract(salesContract);
-                        //Making sure to remove the vehicle out of inventory!
-                        dealership.removeVehicle(saleVehicle);
-                        DealershipFileManager.saveDealership(dealership);
-                        System.out.println("\n Sale Processed! Contract saved. Inventory updated.");
-                        System.out.println("Press ENTER to return...");
-                        scanner.nextLine();
                     }
+                    if(saleVehicle == null){
+                        System.out.println("No vehicle matches with VIN: " + saleVIN);
+                        break;
+                    }
+                    System.out.print("Enter customer name: ");
+                    String customerName = scanner.nextLine().trim();
+                    System.out.print("Enter customer email: ");
+                    String customerEmail = scanner.nextLine().trim();
+                    System.out.println("Confirmed to sell: " + saleVehicle.getYear() + " " +
+                            saleVehicle.getMake() + " " + saleVehicle.getModel());
+                    System.out.println("Contract price: $" + saleVehicle.getPrice());
+                    System.out.println("Will this purchase be financed? (y/n)");
+                    String financeChoice = scanner.nextLine().trim();
+                    boolean isFinanced = financeChoice.equalsIgnoreCase("Y");
+                    String date = java.time.LocalDate.now().toString();
+                    SalesContract salesContract = new SalesContract(date, customerName, customerEmail, saleVehicle, isFinanced);
+                    // Saving the contract into the new CSV file
+                    ContractFileManager contractFileManager = new ContractFileManager();
+                    contractFileManager.saveContract(salesContract);
+                    // Making sure to remove the vehicle out of inventory!
+                    dealership.removeVehicle(saleVehicle);
+                    DealershipFileManager.saveDealership(dealership);
+                    System.out.println("\nSale Processed! Contract saved. Inventory updated.");
+                    System.out.println("Press ENTER to return...");
+                    scanner.nextLine();
                     break;
                 case "L":
                     //Leasing a vehicle
                     break;
                 case "C":
-                    processAddVehicleRequest();
+                    System.out.println("\n--- Listing All Contracts ---");
+                    ContractFileManager displayHelper = new ContractFileManager();
+                    displayHelper.displayAllContracts();
+                    System.out.println("Press ETNER to return...");
+                    scanner.nextLine();
                     break;
                 case "H":
                     System.out.println("\nReturning to Main Menu...");
