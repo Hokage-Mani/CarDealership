@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class ContractFileManager {
-    private static final String FILE_NAME = "contracts.csv";
+    private static final String FILE_NAME = "src/main/resources/contracts.csv";
 
     public void saveContract(Contract contract){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))){
@@ -26,7 +26,17 @@ public class ContractFileManager {
                         salesContract.getMonthlyPayment());
                 writer.write(line);
                 writer.newLine();
+
             }
+            else if (contract instanceof LeaseContract) {
+                LeaseContract leaseContract = (LeaseContract) contract;
+                String line = String.format("LEASE|%s|%.2f|%.2f|%.2f|%.2f",
+                        baseInfo, leaseContract.getEndingValue(), leaseContract.getLeaseFee(),
+                        leaseContract.getTotalPrice(), leaseContract.getMonthlyPayment());
+                writer.write(line);
+                writer.newLine();
+            }
+
         }catch (IOException e){
             System.out.println("Error writing to file");
             e.printStackTrace();
