@@ -10,17 +10,17 @@ public class ContractFileManager {
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))){
             Vehicle v = contract.getVehicleSold();
 
-            String vehicleInfo =String.format("%d| %d| %s| %s| %s| %s| %d| %d| %.2f| %n",
+            String vehicleInfo =String.format("%d|%d|%s|%s|%s|%s|%d|%d|%.2f",
                     v.getVin(), v.getYear(), v.getMake(), v.getModel(), v.getVehicleType(), v.getColor(),
                     v.getOdometer(), v.getPrice());
-            String baseInfo = String.format("%s| %s| %s| %s| %n",
+            String baseInfo = String.format("%s|%s|%s|%s",
                     contract.getDate(), contract.getName(), contract.getEmail(), vehicleInfo);
             //Instanceof to determine weather the contract is Lease or Sale
             if(contract instanceof SalesContract){
                 SalesContract salesContract = (SalesContract) contract;
                 //Use of Ternary operator "?" and ":" for the shortcut of an if statement
                 String financeOption = salesContract.isFinanced() ? "Yes":"No";
-                String line = String.format("SALE| %s| %.2f| %.2f| %.2f| %.2f| %s| %.2f| %n",
+                String line = String.format("SALE|%s|%.2f|%.2f|%.2f|%.2f|%s|%.2f",
                         baseInfo, salesContract.getSalesTaxAmount(), salesContract.getRecordingFee(),
                         salesContract.getProcessingFee(), salesContract.getTotalPrice(), financeOption,
                         salesContract.getMonthlyPayment());
